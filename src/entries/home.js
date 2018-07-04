@@ -8,6 +8,12 @@ function handleSubmit(event) {
   const data = new FormData($form);
   const title = data.get('title');
   console.log(title);
+  store.dispatch({
+    type: 'ADD_SONG',
+    payload: {
+      title, // Se puede dejar así por ES6, sino se escribiría: title: 'title'
+    }
+  })
 }
 
 const initialState = [ // Lista de objetos (array)
