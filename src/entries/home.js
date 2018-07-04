@@ -28,8 +28,17 @@ const initialState = [ // Lista de objetos (array)
   },
 ]
 
+const reducer = function (state, action) {
+  switch (action.type) {
+    case 'ADD_SONG':
+      return [...state, action.payload];
+    default:
+      return state;
+  }
+}
+
 const store = createStore(
-  (state) => state, // reducer,
+  reducer, // reducer,
   initialState,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // enhancer de redux-devtools-extension https://github.com/zalmoxisus/redux-devtools-extension
 )
