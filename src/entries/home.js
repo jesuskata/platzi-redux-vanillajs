@@ -28,7 +28,7 @@ const initialState = [ // Lista de objetos (array)
   },
 ]
 
-const reducer = function (state, action) {
+const reducer = function(state, action) {
   switch (action.type) {
     case 'ADD_SONG':
       return [...state, action.payload];
@@ -43,12 +43,23 @@ const store = createStore(
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() // enhancer de redux-devtools-extension https://github.com/zalmoxisus/redux-devtools-extension
 )
 
-const $container = document.getElementById('playlist');
-const playlist = store.getState(); // Este es un método que nos da el store de Redux
-playlist.forEach((item) => {
-  const template = document.createElement('p'); // Creamos un template con párrafo
-  template.textContent = item.title; // Aquí estamos declarando que el texto que irá en el p será el título del item
-  $container.appendChild(template); // Con esto agregamos un hijo al final
-})
+function render() { // Convertimos en una función para que sea llamada cuando deseemos
+  const $container = document.getElementById('playlist');
+  const playlist = store.getState(); // Este es un método que nos da el store de Redux
+  $container.innerHTML = ''; // Este método deja en blanco el listado antes de agregar un nuevo elemento
+  playlist.forEach((item) => {
+    const template = document.createElement('p'); // Creamos un template con párrafo
+    template.textContent = item.title; // Aquí estamos declarando que el texto que irá en el p será el título del item
+    $container.appendChild(template); // Con esto agregamos un hijo al final
+  })
+}
 
-console.log(store.getState());
+render();
+
+function handleChange() {
+ render();
+}
+
+store.subscribe(handleChange);
+
+// console.log(store.getState());
